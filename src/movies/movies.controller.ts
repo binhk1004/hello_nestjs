@@ -7,6 +7,8 @@ import {
   Patch,
   Post,
 } from '@nestjs/common';
+import { CreateMovieDto } from './dto/create-movie.dto';
+import { UpdateMovieDto } from './dto/update-movie.dto';
 import { Movie } from './entities/movie.entity';
 import { MoviesService } from './movies.service';
 
@@ -28,13 +30,13 @@ export class MoviesController {
   //search()함수 자체를 하나의 id로 간주해버린다.
 
   @Get('/:id')
-  getOne(@Param('id') movieId: string): Movie {
+  getOne(@Param('id') movieId: number): Movie {
     //url뒤에 붙는 파라미터 값을 얻기 위해선 위와 같이 @Param을 사용한다.
     return this.movieService.getOne(movieId);
   }
 
   @Post()
-  create(@Body() movieData) {
+  create(@Body() movieData: CreateMovieDto) {
     return this.movieService.create(movieData);
   }
 
@@ -44,12 +46,12 @@ export class MoviesController {
   }
 
   @Delete('/:id')
-  remove(@Param('id') movieId: string) {
+  remove(@Param('id') movieId: number) {
     return this.movieService.deleteOne(movieId);
   }
 
   @Patch('/:id')
-  path(@Param('id') movieId: string, @Body() updateData) {
+  path(@Param('id') movieId: number, @Body() updateData: UpdateMovieDto) {
     return this.movieService.updata(movieId, updateData);
   }
 }
